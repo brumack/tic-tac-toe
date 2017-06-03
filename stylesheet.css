@@ -1,0 +1,108 @@
+
+
+body {
+  background: black;
+}
+
+.player span, .result {
+  font-family:'Lobster';
+}
+
+.board {
+  width:604px;
+  height:604px;
+  margin:auto;
+  margin-top:5%;
+}
+
+.square {
+  height:200px;
+  width:33%;
+  background:black;
+  border-color:white;
+  border-width; 2px;
+  border-style:solid;
+  font-size:1000%;
+  color:white;
+  text-align:center;
+}
+
+.top {
+  border-top:none;
+}
+
+.bottom {
+  border-bottom:none;
+}
+
+.left {
+  border-left:none;
+}
+
+.right {
+  border-right:none;
+}
+
+.player {
+  display:inline-block;
+  float:left;
+  width:33%;
+  margin-top:1%;
+  color:white;
+  font-size:40px;
+  text-align:center;
+}
+
+#player1 {
+  margin-left:16.5%;
+}
+
+.splash {
+  z-index:1;
+  height:50%;
+  width:75%;
+  background:white;
+  position:relative;
+  bottom:75%;
+  left:12.5%;
+}
+
+.result {
+  text-align:center;
+  font-size:5em;
+  position:relative;
+  top:8%;
+}
+
+.question {
+  text-align:center;
+  font-family:'Play';
+  font-size:2em;
+  position:relative;
+  top:2%;
+}
+
+.buttonBox {
+  display:block;
+  width:80%;
+  margin: 0 auto;
+  position:relative;
+  bottom:-30%;
+}
+
+.cstmBtn {
+  display:inline-block;
+  height:50px;
+  width:32.61%;
+  background:black;
+  color:white;
+  margin:0;
+  text-align:center;
+  font-family:'Play';
+  font-size:2.1em;
+}
+
+.cstmBtn:hover {
+  background:white;
+  color:black;
+}

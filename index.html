@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type = "text/css" href = "stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Play" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src = "ttt.js"></script>
+
+  </head>
+
+  <body>
+    <div class = "container-fluid">
+      <div class = "board">
+        <div class = "row">
+          <div id = "sp1" class = "square left top col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp2" class = "square top col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp3" class = "square right top col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        </div>
+        <div class = "row">
+          <div id = "sp4" class = "square left col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp5" class = "square col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp6" class = "square right col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        </div>
+        <div class = "row">
+          <div id = "sp7" class = "square left bottom col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp8" class = "square bottom col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+          <div id = "sp9" class = "square right bottom col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        </div>
+        <div class = "splash">
+          <div class = "result">Lets Play!</div>
+          <div class = "question"></div>
+          <div class = "buttonBox">
+            <div class = "cstmBtn first">Go First</div>
+            <div class = "cstmBtn last">Go Last</div>
+            <div class = "cstmBtn exit">Exit</div>
+          </div>
+        </div>
+      </div>
+      <div class = "score">
+        <div id = "player1" class = "player"><span>Player Wins</span><p id = "playerScore">0</p></div>
+        <div id = "computer" class = "player"><span>Computer Wins</span><p id = "computerScore">0</p></div>
+      </div>
+
+    </div>
+  </body>
+</html>
