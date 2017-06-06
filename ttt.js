@@ -67,44 +67,49 @@ $(document).ready(function() {
       }
     }
 
-    // *** determines remaining possible solutions and creates array ***
-    for (i = 0; i < remainingWinningConditions.length; i++)
-      for (j = 0; j < player.squares.length; j++)
-        if (remainingWinningConditions[i].indexOf(player.squares[j]) != -1) {
-          remainingWinningConditions.splice(i,1);
+
+      // *** determines remaining possible solutions and creates array ***
+      for (i = 0; i < remainingWinningConditions.length; i++)
+        for (j = 0; j < player.squares.length; j++)
+          if (remainingWinningConditions[i].indexOf(player.squares[j]) != -1) {
+            remainingWinningConditions.splice(i,1);
+            i--;
+            j = player.squares.length;
+          }
+    if (remainingWinningConditions.length > 0) {
+      // *** breaks down 2-dimensional array into one array of spaces ***
+      for (i = 0; i < remainingWinningConditions.length; i++)
+        squareSort = squareSort.concat(remainingWinningConditions[i])
+
+
+      // *** creates new two-dimensional array with first value an occurance
+      //   count of the second value (spaces) - (ie [2,sp3] meaning 2 counts of sp3) ***
+      while (squareSort.length > 0) {
+        squareCounts.unshift([1]);
+        squareCounts[0].push(squareSort[0]);
+        squareSort.splice(0,1);
+        while (squareSort.indexOf(squareCounts[0][1]) != -1) {
+          squareCounts[0][0]++;
+          squareSort.splice(squareSort.indexOf(squareCounts[0][1]),1);
+        }
+      }
+
+      // *** removes any spaces already occupied by the computer
+      for (i = 1; i < squareCounts.length; i++)
+        if ($('#'+squareCounts[i][1]).html() != '') {
+          squareCounts.splice(i,1)
           i--;
-          j = player.squares.length;
         }
 
-    // *** breaks down 2-dimensional array into one array of spaces ***
-    for (i = 0; i < remainingWinningConditions.length; i++)
-      squareSort = squareSort.concat(remainingWinningConditions[i])
-
-
-    // *** creates new two-dimensional array with first value an occurance
-    //   count of the second value (spaces) - (ie [2,sp3] meaning 2 counts of sp3) ***
-    while (squareSort.length > 0) {
-      squareCounts.unshift([1]);
-      squareCounts[0].push(squareSort[0]);
-      squareSort.splice(0,1);
-      while (squareSort.indexOf(squareCounts[0][1]) != -1) {
-        squareCounts[0][0]++;
-        squareSort.splice(squareSort.indexOf(squareCounts[0][1]),1);
-      }
+      //*** sorts the remaining data so that the most frequently occuring space(s)
+      //lay at the end of the array. Then returns the last space in the array***
+      squareCounts.sort()
+      console.log('squareCounts', squareCounts);
+      return squareCounts[squareCounts.length-1][1];
     }
-
-    // *** removes any spaces already occupied by the computer
-    for (i = 1; i < squareCounts.length; i++)
-      if ($('#'+squareCounts[i][1]).html() != '') {
-        squareCounts.splice(i,1)
-        i--;
-      }
-
-    //*** sorts the remaining data so that the most frequently occuring space(s)
-    //lay at the end of the array. Then returns the last space in the array***
-    squareCounts.sort()
-    console.log(squareCounts);
-    return squareCounts[squareCounts.length-1][1];
+    else {
+      return squares[(Math.round(Math.random()*10)%squares.length)];
+    }
   }
 
 
