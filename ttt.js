@@ -32,62 +32,79 @@ $(document).ready(function() {
   }
 
   var calculate = function() {
-    for (var i = 0; i < remainingWinningConditions.length; i++)
-      for (var j = 0; j < player.squares.length; j++)
+    var squareSort = [];
+    var squareCounts = [];
+    var bestMove = [];
+    var counter = 0;
+
+
+    // *** checks for 2 spaces to a winningCondition and makes winning move
+    for (i = 0; i < remainingWinningConditions.length; i++) {
+      counter = 0;
+      for (j = 0; j < computer.squares.length; j++) {
+        if (remainingWinningConditions[i].indexOf(computer.squares[j]) != -1)
+          counter++;
+        if (counter == 2) {
+          for (k = 0; k < 3; k++)
+            if ($('#'+remainingWinningConditions[i][k]).html() == '')
+              return remainingWinningConditions[i][k];
+        }
+      }
+    }
+
+    // *** checks for 2 spaces to a winningCondition for player and then blocks
+    for (var i = 0; i < winningConditions.length; i++) {
+      counter = 0;
+      for (var j = 0; j < player.squares.length; j++) {
+        if (winningConditions[i].indexOf(player.squares[j]) != -1)
+          counter++;
+        if (counter == 2) {
+          console.log('player has 2');
+          for (var k = 0; k < 3; k++)
+            if ($('#'+winningConditions[i][k]).html() == '')
+              return winningConditions[i][k];
+        }
+      }
+    }
+
+    // *** determines remaining possible solutions and creates array ***
+    for (i = 0; i < remainingWinningConditions.length; i++)
+      for (j = 0; j < player.squares.length; j++)
         if (remainingWinningConditions[i].indexOf(player.squares[j]) != -1) {
           remainingWinningConditions.splice(i,1);
           i--;
           j = player.squares.length;
         }
 
-    var squareSort = [];
-
+    // *** breaks down 2-dimensional array into one array of spaces ***
     for (i = 0; i < remainingWinningConditions.length; i++)
       squareSort = squareSort.concat(remainingWinningConditions[i])
 
 
-
-    var counts = [];
-
-    console.log(squareSort);
+    // *** creates new two-dimensional array with first value an occurance
+    //   count of the second value (spaces) - (ie [2,sp3] meaning 2 counts of sp3) ***
     while (squareSort.length > 0) {
-      counts.unshift([1]);
-      counts[0].push(squareSort[0]);
+      squareCounts.unshift([1]);
+      squareCounts[0].push(squareSort[0]);
       squareSort.splice(0,1);
-      while (squareSort.indexOf(counts[0][1]) != -1) {
-        counts[0][0]++;
-        squareSort.splice(squareSort.indexOf(counts[0][1]),1);
+      while (squareSort.indexOf(squareCounts[0][1]) != -1) {
+        squareCounts[0][0]++;
+        squareSort.splice(squareSort.indexOf(squareCounts[0][1]),1);
       }
     }
-    counts.sort();
 
-    for (i = 1; i < counts.length; i++) {
-      if ($('#'+counts[i][1]).html() != '') {
-        counts.splice(i,1)
+    // *** removes any spaces already occupied by the computer
+    for (i = 1; i < squareCounts.length; i++)
+      if ($('#'+squareCounts[i][1]).html() != '') {
+        squareCounts.splice(i,1)
         i--;
       }
-    }
 
-    console.log(counts);
-    return counts[counts.length-1][1];
-/*
-    var character = [];
-    var count = [];
-
-
-    while (squareSort.length > 0) {
-      character.unshift(squareSort[0])
-      squareSort.splice(0,1)
-      count.unshift(1);
-      while (squareSort.indexOf(character[0]) != -1) {
-        count[0]++;
-        squareSort.splice(squareSort.indexOf(character[0]),1);
-      }
-    }
-    console.log('character', character);
-    console.log('count', count);
-*/
-
+    //*** sorts the remaining data so that the most frequently occuring space(s)
+    //lay at the end of the array. Then returns the last space in the array***
+    squareCounts.sort()
+    console.log(squareCounts);
+    return squareCounts[squareCounts.length-1][1];
   }
 
 
@@ -114,6 +131,7 @@ $(document).ready(function() {
       //move = Math.floor(Math.random()*10) + 1;
     computer.squares.push(move);
     squares.splice(squares.indexOf(move),1);
+    console.log('squares', squares.length);
     $('#' + move).html(computer.symbol);
   }
 
@@ -142,7 +160,7 @@ $(document).ready(function() {
         }
       }
 
-      else if (squares.length == 0) {
+      if (squares.length == 0) {
         $('.result').html('Stalemate');
         $('.question').html('Play again?');
         $('#computerScore').html(computer.wins);
